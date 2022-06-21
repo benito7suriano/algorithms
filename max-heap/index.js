@@ -1,5 +1,5 @@
-const leftChild = i => i * 2 + 1
-const rightChild = i => i * 2 + 2
+const leftChild = i => i * 2
+const rightChild = i => i * 2 + 1
 const parent = i => Math.floor(i / 2)
 
 // initialize heap as an empty array.
@@ -34,6 +34,43 @@ class MaxHeap {
         }
       }
     }
+  }
+
+  // extract node from the heap.
+  extract () {
+    let largest = this.heap[1]
+    if(this.heap.length > 2) {
+      this.heap[1] = this.heap[this.heap.length - 1]
+      this.heap.splice(this.heap.length - 1)
+      if(this.heap.length === 3) {
+        if(this.heap[1] > this.heap[2]) {
+          this.swap(1,2)
+        }
+        return largest
+      }
+      let i = 1
+      let left = leftChild(i)
+      let right = rightChild(i)
+      while(this.heap[i] <= this.heap[left] || this.heap[i] <=this.heap[right]) {
+        if(this.heap[left] > this.heap[right]) {
+          this.swap(i, left)
+          i = left
+        } else {
+          this.swap(i, right)
+          i = right
+        }
+        left = leftChild(i)
+        right = rightChild(i)
+        if(this.heap[left] === undefined || this.heap[right] === undefined) {
+          break
+        }
+      }
+    } else if (this.heap.length === 2) {
+      this.heap.splice(1,1)
+    } else {
+      return null
+    }
+    return largest
   }
 }
 
