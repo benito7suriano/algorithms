@@ -25,6 +25,14 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
+var getLeftChild = function getLeftChild(i) {
+  return i * 2;
+};
+
+var getRightChild = function getRightChild(i) {
+  return i * 2 + 1;
+};
+
 var getParent = function getParent(i) {
   return Math.floor(i / 2);
 };
@@ -63,9 +71,8 @@ var MinHeap = /*#__PURE__*/function () {
           this.swap(1, 2);
         }
 
-        var i = this.heap.length - 1; // 2
-
-        var parent = getParent(i); // 1
+        var i = this.heap.length - 1;
+        var parent = getParent(i);
 
         while (this.heap[i] <= this.heap[parent] && i > 1) {
           this.swap(i, parent);
@@ -73,6 +80,32 @@ var MinHeap = /*#__PURE__*/function () {
           parent = getParent(i);
         }
       }
+    } // extract node from the heap.
+
+  }, {
+    key: "extract",
+    value: function extract() {
+      var smallest = this.peek();
+      this.heap[1] = this.heap[this.heap.length - 1];
+      this.heap.splice(this.heap.length - 1, 1);
+      var i = 1;
+      var left = getLeftChild(i);
+      var right = getRightChild(i);
+
+      while (this.heap[left] && this.heap[right]) {
+        if (this.heap[left] <= this.heap[right]) {
+          this.swap(i, left);
+          i = left;
+        } else if (this.heap[right] <= this.heap[left]) {
+          this.swap(i, right);
+          i = right;
+        }
+
+        left = getLeftChild(i);
+        right = getRightChild(i);
+      }
+
+      return smallest;
     }
   }]);
 
@@ -86,3 +119,13 @@ minHeap.insert(4);
 minHeap.insert(5);
 minHeap.insert(2);
 console.log(minHeap.heap);
+var minVal = minHeap.extract();
+console.log(minHeap.heap, '|', 'min value:', minVal);
+minVal = minHeap.extract();
+console.log(minHeap.heap, '|', 'min value:', minVal);
+minVal = minHeap.extract();
+console.log(minHeap.heap, '|', 'min value:', minVal);
+minVal = minHeap.extract();
+console.log(minHeap.heap, '|', 'min value:', minVal);
+minVal = minHeap.extract();
+console.log(minHeap.heap, '|', 'min value:', minVal);

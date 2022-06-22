@@ -29,14 +29,36 @@ class MinHeap {
       if (this.heap.length === 3 && this.heap[1] > this.heap[2]) {
         this.swap(1, 2)
       }
-      let i = this.heap.length - 1 // 2
-      let parent = getParent(i) // 1
+      let i = this.heap.length - 1
+      let parent = getParent(i)
       while (this.heap[i] <= this.heap[parent] && i > 1) {
         this.swap(i, parent)
         i = parent
         parent = getParent(i)
       }
     }
+  }
+
+  // extract node from the heap.
+  extract() {
+    let smallest = this.peek()
+    this.heap[1] = this.heap[this.heap.length - 1]
+    this.heap.splice(this.heap.length - 1, 1)
+    let i = 1
+    let left = getLeftChild(i)
+    let right = getRightChild(i)
+    while (this.heap[left] && this.heap[right]) {
+      if (this.heap[left] <= this.heap[right]) {
+        this.swap(i, left)
+        i = left
+      } else if (this.heap[right] <= this.heap[left]) {
+        this.swap(i, right)
+        i = right
+      }
+      left = getLeftChild(i)
+      right = getRightChild(i)
+    }
+    return smallest
   }
 }
 
@@ -48,3 +70,13 @@ minHeap.insert(5)
 minHeap.insert(2)
 
 console.log(minHeap.heap)
+let minVal = minHeap.extract()
+console.log(minHeap.heap, '|', 'min value:', minVal)
+minVal = minHeap.extract()
+console.log(minHeap.heap, '|', 'min value:', minVal)
+minVal = minHeap.extract()
+console.log(minHeap.heap, '|', 'min value:', minVal)
+minVal = minHeap.extract()
+console.log(minHeap.heap, '|', 'min value:', minVal)
+minVal = minHeap.extract()
+console.log(minHeap.heap, '|', 'min value:', minVal)
