@@ -73,10 +73,3 @@ class MaxHeap {
     return largest
   }
 }
-
-const maxheap = new MaxHeap()
-maxheap.insert(1)
-maxheap.insert(3)
-maxheap.insert(4)
-maxheap.insert(10)
-console.log(maxheap.heap)
