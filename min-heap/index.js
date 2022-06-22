@@ -41,7 +41,7 @@ class MinHeap {
 
   // extract node from the heap.
   extract() {
-    let smallest = this.peek()
+    let smallest = this.peek() || null
     this.heap[1] = this.heap[this.heap.length - 1]
     this.heap.splice(this.heap.length - 1, 1)
     let i = 1
@@ -61,22 +61,3 @@ class MinHeap {
     return smallest
   }
 }
-
-const minHeap = new MinHeap()
-console.log(minHeap.heap)
-minHeap.insert(6)
-minHeap.insert(4)
-minHeap.insert(5)
-minHeap.insert(2)
-
-console.log(minHeap.heap)
-let minVal = minHeap.extract()
-console.log(minHeap.heap, '|', 'min value:', minVal)
-minVal = minHeap.extract()
-console.log(minHeap.heap, '|', 'min value:', minVal)
-minVal = minHeap.extract()
-console.log(minHeap.heap, '|', 'min value:', minVal)
-minVal = minHeap.extract()
-console.log(minHeap.heap, '|', 'min value:', minVal)
-minVal = minHeap.extract()
-console.log(minHeap.heap, '|', 'min value:', minVal)
